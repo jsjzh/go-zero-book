@@ -1,0 +1,6 @@
+Name: search-api
+Host: 0.0.0.0
+Port: 8889
+Auth:
+  AccessSecret: 54E27799-92FF-51B5-EEFD-20944724114C
+  AccessExpire: 604800

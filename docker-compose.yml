@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:7
+    command: redis-server --appendonly yes --requirepass 123456 --bind 0.0.0.0
+    restart: always
+    volumes:
+      - go_demo-redis:/data
+    ports:
+      - 6379:6379
+    networks:
+      - go_demo
+  mysql:
+    image: mysql:8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "go_demo"
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - go_demo-mysql:/var/lib/mysql
+      # - ./conf.d/mysql/:/etc/mysql/conf.d
+      # - ./init.d/mysql/:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    networks:
+      - go_demo
+
+volumes:
+  go_demo-redis:
+  go_demo-mysql:
+
+networks:
+  go_demo:
+    name: go_demo
+    driver: bridge

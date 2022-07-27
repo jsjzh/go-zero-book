@@ -1,0 +1,25 @@
+# idea
+*.iml
+*.ipr
+*.iws
+/.idea
+/.vscode
+
+# maven
+target
+
+# log
+/log
+
+# node modules
+/deployd-k8s-fe/node_modules
+.project
+.settings
+.classpath
+APP_HOME_IS_UNDEFINED
+catalina.base_IS_UNDEFINED
+version.vm
+coverage-report
+
+# go air
+tmp
