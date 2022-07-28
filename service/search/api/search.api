@@ -1,6 +1,5 @@
 type (
 	SearchReq {
-		// 图书名称
 		Name string `form:"name"`
 	}
 
@@ -12,7 +11,7 @@ type (
 
 @server(
 	jwt: Auth
-	middleware: Example // 路由中间件声明
+	middleware: Example
 )
 service search-api {
 	@handler search

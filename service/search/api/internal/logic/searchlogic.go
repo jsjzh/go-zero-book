@@ -23,7 +23,7 @@ func NewSearchLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SearchLogi
 	}
 }
 
-func (l *SearchLogic) Search(req *types.SearchReq) (*types.SearchReply, error) {
+func (l *SearchLogic) Search(req *types.SearchReq) (resp *types.SearchReply, err error) {
 	logx.Infof("userId: %v", l.ctx.Value("userId")) // 这里的key和生成jwt token时传入的key一致
 	return &types.SearchReply{}, nil
 }

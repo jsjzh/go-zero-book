@@ -28,12 +28,13 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-func (l *LoginLogic) Login(req *types.LoginReq) (*types.LoginReply, error) {
+func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginReply, err error) {
 	if len(strings.TrimSpace(req.Username)) == 0 || len(strings.TrimSpace(req.Password)) == 0 {
-		return nil, errors.New("参数错误")
+		return nil, errors.New("账号或者密码输入错误")
 	}
 
 	userInfo, err := l.svcCtx.UserModel.FindOneByNumber(l.ctx, req.Username)
+
 	switch err {
 	case nil:
 	case model.ErrNotFound:
@@ -46,14 +47,13 @@ func (l *LoginLogic) Login(req *types.LoginReq) (*types.LoginReply, error) {
 		return nil, errors.New("用户密码不正确")
 	}
 
-	// ---start---
 	now := time.Now().Unix()
 	accessExpire := l.svcCtx.Config.Auth.AccessExpire
 	jwtToken, err := l.getJwtToken(l.svcCtx.Config.Auth.AccessSecret, now, l.svcCtx.Config.Auth.AccessExpire, userInfo.Id)
+
 	if err != nil {
 		return nil, err
 	}
-	// ---end---
 
 	return &types.LoginReply{
 		Id:           userInfo.Id,
