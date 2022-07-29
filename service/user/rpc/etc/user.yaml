@@ -1,12 +1,12 @@
-Name: user-api
-Host: 127.0.0.1
-Port: 8888
+Name: user.rpc
+ListenOn: 127.0.0.1:8080
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: user.rpc
 Mysql:
   DataSource: root:@tcp(127.0.0.1:3306)/go_demo?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 CacheRedis:
   - Host: 127.0.0.1:6379
     Pass: "123456"
     Type: node
-Auth:
-  AccessSecret: 54E27799-92FF-51B5-EEFD-20944724114C
-  AccessExpire: 604800

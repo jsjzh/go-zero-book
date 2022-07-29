@@ -6,6 +6,7 @@ type SearchReq struct {
 }
 
 type SearchReply struct {
-	Name  string `json:"name"`
-	Count int    `json:"count"`
+	Name     string      `json:"name"`
+	Count    int         `json:"count"`
+	UserInfo interface{} `json:"userInfo"`
 }

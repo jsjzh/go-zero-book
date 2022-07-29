@@ -4,21 +4,16 @@ type (
 	}
 
 	SearchReply {
-		Name  string `json:"name"`
-		Count int    `json:"count"`
+		Name     string      `json:"name"`
+		Count    int         `json:"count"`
+		UserInfo interface{} `json:"userInfo"`
 	}
 )
 
-@server(
-	jwt: Auth
-	middleware: Example
-)
 service search-api {
 	@handler search
 	get /search/do (SearchReq) returns (SearchReply)
-}
-
-service search-api {
+	
 	@handler ping
 	get /search/ping
 }

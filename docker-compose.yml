@@ -3,18 +3,19 @@ version: "3"
 services:
   redis:
     image: redis:7
-    command: redis-server --appendonly yes --requirepass 123456 --bind 0.0.0.0
     restart: always
+    command: redis-server --appendonly yes --requirepass 123456 --bind 127.0.0.1
     volumes:
       - go_demo-redis:/data
     ports:
       - 6379:6379
     networks:
       - go_demo
+
   mysql:
     image: mysql:8
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -30,9 +31,23 @@ services:
     networks:
       - go_demo
 
+  etcd:
+    image: bitnami/etcd:3.5
+    restart: always
+    environment:
+      - ETCD_NAME=etcd
+      - ALLOW_NONE_AUTHENTICATION=yes
+    volumes:
+      - go_demo-etcd:/bitnami/etcd
+    ports:
+      - 2379:2379
+    networks:
+      - go_demo
+
 volumes:
   go_demo-redis:
   go_demo-mysql:
+  go_demo-etcd:
 
 networks:
   go_demo:
